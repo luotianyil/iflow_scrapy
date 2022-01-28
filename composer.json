@@ -1,0 +1,25 @@
+{
+    "name": "iflow/scrapy",
+    "license": "MulanPSL-2.0",
+    "autoload": {
+        "psr-4": {
+            "iflow\\Scrapy\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "洛水天依",
+            "email": "2461082216@qq.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.0.0",
+        "guzzlehttp/guzzle": "~6.0|~7.0",
+        "guzzlehttp/ringphp": "~1.0",
+        "phpunit/phpunit": "^9.5",
+        "ext-simplexml": "*",
+        "ext-libxml": "*",
+        "ext-dom": "*"
+    }
+}

@@ -30,7 +30,7 @@ $request = new Request(
 
 $queue = new Queue();
 
-for ($i = 0; $ < 0; $i++) {
+for ($i = 0; $i < 0; $i++) {
     $queue -> add($request, function (Response $response) {
         var_dump($response -> getResponseBodyType() -> getParserContent());
     });

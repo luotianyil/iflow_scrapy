@@ -13,7 +13,7 @@ class RequestParameters {
      */
     public function getParameters(): array {
 
-        if (strtolower($this->parametersType === 'body'))
+        if (is_array($this->parameters) && strtolower($this->parametersType) === 'body')
             return [ $this->parametersType => json_encode($this->parameters) ];
 
         return [ $this->parametersType => $this->parameters ];

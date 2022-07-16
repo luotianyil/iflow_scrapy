@@ -29,6 +29,7 @@ class Scrapy {
         $client = new Client($this->options);
         foreach ($this->queue -> getQueue() as $index => $queue) {
             $request = $queue['request'];
+
             $promise = $client -> requestAsync($request -> getMethod(), $request -> getUrl(), [
                 'headers' => $request -> getHeaders(),
                 ...$request -> getRequestParameters() -> getParameters(),

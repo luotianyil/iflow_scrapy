@@ -9,6 +9,10 @@ class Request {
     public function __construct(
         protected string $url,
         protected string $method = 'GET',
+        protected array $queryParameters = [
+            'type' => 'body',
+            'parameters' => ''
+        ],
         protected array $headers = [],
         protected array|Cookie $cookie = [],
         protected string $version = '1.1'
@@ -29,7 +33,7 @@ class Request {
      * @return RequestParameters
      */
     public function getRequestParameters(): RequestParameters {
-        return $this->requestParameters ?: new RequestParameters();
+        return $this->requestParameters ?: new RequestParameters($this->queryParameters['type'], $this->queryParameters['parameters']);
     }
 
 

@@ -33,7 +33,7 @@ class Request {
      * @return RequestParameters
      */
     public function getRequestParameters(): RequestParameters {
-        return $this->requestParameters ?: new RequestParameters($this->queryParameters['type'], $this->queryParameters['parameters']);
+        return $this->requestParameters ?: new RequestParameters($this->queryParameters['type'] ?? 'body', $this->queryParameters['parameters'] ?? [];
     }
 
 

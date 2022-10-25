@@ -2,6 +2,7 @@
 
 namespace iflow\Scrapy\implement\Response;
 
+use GuzzleHttp\Exception\ClientException;
 use iflow\Scrapy\implement\Response\interfaces\TypeInterface;
 use iflow\Scrapy\implement\Response\Type\DefaultType;
 use iflow\Scrapy\implement\Response\Type\HtmlType;
@@ -16,11 +17,16 @@ class Response {
     protected string $body = "";
 
     public function __construct(
-        public \GuzzleHttp\Psr7\Response $response
+        public \GuzzleHttp\Psr7\Response|ClientException $response
     ) {}
 
 
     public function parserResponseBody(): Response {
+
+        if ($this->response instanceof ClientException) {
+            $this->response = $this->response -> getResponse();
+        }
+
         $contentType = $this->response -> getHeader('Content-Type')[0];
         $this->body = $this->response -> getBody() -> getContents();
         $this->ResponseBodyType = match ($contentType) {

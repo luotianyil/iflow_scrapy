@@ -2,6 +2,7 @@
 
 namespace iflow\Scrapy\implement\Query;
 
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use iflow\Scrapy\implement\Request\Request;
@@ -31,7 +32,7 @@ class Queue {
     }
 
     public function callable(Response|TransferException $response, Request $request, callable $call) {
-        if ($response instanceof Response) {
+        if ($response instanceof Response || $response instanceof ClientException) {
             $responseScrapy = new \iflow\Scrapy\implement\Response\Response($response);
             $response = $responseScrapy -> parserResponseBody();
         }

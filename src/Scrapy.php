@@ -13,7 +13,7 @@ class Scrapy {
 
     public function __construct(
         protected Queue $queue,
-        protected Proxy $proxy,
+        protected ?Proxy $proxy = null,
         protected int $concurrency = 5,
         protected array $options = []
     ) {}
@@ -33,7 +33,7 @@ class Scrapy {
             $promise = $client -> requestAsync($request -> getMethod(), $request -> getUrl(), [
                 'headers' => $request -> getHeaders(),
                 ...$request -> getRequestParameters() -> getParameters(),
-                'proxy' => $this->proxy -> getRandProxy(),
+                'proxy' => $this->proxy ?-> getRandProxy() ?: [],
                 'cookies' => $request -> getCookie() -> getCookieJAR()
             ]) -> then(
                 fn (ResponseInterface $response) => $this->queue -> callable($response, $request, $queue['call']),

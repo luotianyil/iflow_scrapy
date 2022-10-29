@@ -8,8 +8,8 @@ class DefaultType extends TypeAbstract {
 
     public function getParserContent(): mixed {
         $type = $this->getResponseBodyType();
-        if ($type === 'json') return json_decode($this->body, true);
-        if ($type === 'xml') {
+        if (str_starts_with($type, 'json')) return json_decode($this->body, true);
+        if (str_starts_with($type, 'xml')) {
             $obj = simplexml_load_string($this->body,"SimpleXMLElement", LIBXML_NOCDATA);
             return json_decode(json_encode($obj, JSON_UNESCAPED_UNICODE),true);
         }

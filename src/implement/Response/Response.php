@@ -3,6 +3,8 @@
 namespace iflow\Scrapy\implement\Response;
 
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\TransferException;
 use iflow\Scrapy\implement\Response\interfaces\TypeInterface;
 use iflow\Scrapy\implement\Response\Type\DefaultType;
 use iflow\Scrapy\implement\Response\Type\HtmlType;
@@ -17,13 +19,16 @@ class Response {
     protected string $body = "";
 
     public function __construct(
-        public \GuzzleHttp\Psr7\Response|ClientException $response
+        public \GuzzleHttp\Psr7\Response|TransferException $response
     ) {}
 
 
     public function parserResponseBody(): Response {
 
-        if ($this->response instanceof ClientException) {
+        if ($this->response instanceof TransferException) {
+            if (!method_exists($this->response, 'getResponse')) {
+                throw new \RuntimeException('请求远程服务器失败: '. $this->response -> getMessage());
+            }
             $this->response = $this->response -> getResponse();
         }
 

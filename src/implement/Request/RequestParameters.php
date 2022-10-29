@@ -16,6 +16,7 @@ class RequestParameters {
         if (is_array($this->parameters) && strtolower($this->parametersType) === 'body')
             return [ $this->parametersType => json_encode($this->parameters) ];
 
+        if (empty($this->parameters)) return [ 'body' => null ];
         return [ $this->parametersType => $this->parameters ];
     }
 

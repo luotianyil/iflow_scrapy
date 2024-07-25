@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\TransferException;
 use iflow\Scrapy\implement\Response\interfaces\TypeInterface;
 use iflow\Scrapy\implement\Response\Type\DefaultType;
 use iflow\Scrapy\implement\Response\Type\HtmlType;
+use iflow\Scrapy\implement\Response\Type\TextType;
 use iflow\Scrapy\implement\Response\Type\XmlType;
 
 class Response {
@@ -19,7 +20,8 @@ class Response {
     protected string $body = "";
 
     public function __construct(
-        public \GuzzleHttp\Psr7\Response|TransferException $response
+        public \GuzzleHttp\Psr7\Response|TransferException $response,
+        protected array $options = [ 'serialization' => true ]
     ) {}
 
 
@@ -34,11 +36,13 @@ class Response {
 
         $contentType = $this->response -> getHeader('Content-Type')[0];
         $this->body = $this->response -> getBody() -> getContents();
-        $this->ResponseBodyType = match ($contentType) {
+
+        // 验证是否需要序列化
+        $this->ResponseBodyType = ($this->options['serialization'] ?? true) ? match ($contentType) {
             'text/html' => new HtmlType($contentType, $this->body),
             'text/xml' => new XmlType($contentType, $this->body),
             default => new DefaultType($contentType, $this->body)
-        };
+        } : new TextType($contentType, $this->body);
         return $this;
     }
 

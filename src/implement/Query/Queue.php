@@ -13,8 +13,8 @@ class Queue {
      */
     protected array $queue = [];
 
-    public function add(Request $request, callable $call = null): Queue {
-        array_unshift($this->queue, ['request' => $request, 'call' => $call]);
+    public function add(Request $request, callable $call = null, array $options = [ 'serialization' => true ]): Queue {
+        array_unshift($this->queue, ['request' => $request, 'call' => $call, 'options' => $options]);
         return $this;
     }
 
@@ -30,8 +30,8 @@ class Queue {
         return $this->queue;
     }
 
-    public function callable(Response|TransferException $response, Request $request, callable $call) {
-        $responseScrapy = new \iflow\Scrapy\implement\Response\Response($response);
+    public function callable(Response|TransferException $response, Request $request, callable $call, array $options = [ 'serialization' => true ]) {
+        $responseScrapy = new \iflow\Scrapy\implement\Response\Response($response, $options);
         $response = $responseScrapy -> parserResponseBody();
         if ($call) call_user_func($call, $response, $request, $this);
     }

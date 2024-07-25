@@ -36,7 +36,7 @@ class Scrapy {
                 'proxy' => $this->proxy ?-> getRandProxy() ?: [],
                 'cookies' => $request -> getCookie() -> getCookieJAR()
             ]) -> then(
-                fn (ResponseInterface $response) => $this->queue -> callable($response, $request, $queue['call']),
+                fn (ResponseInterface $response) => $this->queue -> callable($response, $request, $queue['call'], $queue['options']),
                 fn (TransferException $err) => $this->queue -> callable($err, $request, $queue['call'])
             );
             $this->queue -> del($index);

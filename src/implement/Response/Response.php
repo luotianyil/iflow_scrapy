@@ -34,7 +34,7 @@ class Response {
             $this->response = $this->response -> getResponse();
         }
 
-        $contentType = $this->response -> getHeader('Content-Type')[0];
+        $contentType = $this->response -> getHeader('Content-Type')[0] ?? '';
         $this->body = $this->response -> getBody() -> getContents();
 
         // 验证是否需要序列化

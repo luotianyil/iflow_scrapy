@@ -21,6 +21,6 @@ abstract class TypeAbstract implements TypeInterface {
 
     public function getResponseBodyType(): string {
         // TODO: Implement getResponseBodyType() method.
-        return explode('/', $this->contentType)[1];
+        return explode('/', $this->contentType)[1] ?? '';
     }
 }

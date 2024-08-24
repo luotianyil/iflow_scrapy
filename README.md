@@ -37,7 +37,7 @@ for ($i = 0; $i < 0; $i++) {
 }
 
 // 如果不使用代理可以注释
-// $proxy = new Proxy();
+$proxy = new Proxy();
 // $proxy -> addProxy('183.195.106.118', 8118);
 
 // 执行请求
